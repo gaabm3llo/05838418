@@ -1,0 +1,45 @@
+from PIL import Image, ImageDraw, ImageFont
+
+# Tamanho da imagem
+width = 800
+height = 600
+
+# Criando a imagem
+image = Image.new("RGB", (width, height), "white")
+draw = ImageDraw.Draw(image)
+
+# Carregando a imagem da Elsa conjurando um feitiço de gelo
+elsa_image = Image.open("elsa_conjuring.png")  # Substitua "elsa_conjuring.png" pelo caminho correto da imagem
+
+# Redimensionando a imagem da Elsa para ajustar à estampa
+elsa_image = elsa_image.resize((600, 400))
+
+# Posicionando a imagem da Elsa no centro da estampa
+elsa_x = (width - elsa_image.width) // 2
+elsa_y = (height - elsa_image.height) // 2
+image.paste(elsa_image, (elsa_x, elsa_y))
+
+# Adicionando o título "Rainha do Gelo" em letras elegantes acima da imagem
+title = "Rainha do Gelo"
+title_font = ImageFont.truetype("arial.ttf", 50)  # Substitua "arial.ttf" pelo caminho correto da fonte
+title_width, title_height = draw.textsize(title, font=title_font)
+title_x = (width - title_width) // 2
+title_y = elsa_y - title_height - 20
+draw.text((title_x, title_y), title, font=title_font, fill="black")
+
+# Adicionando pequenos flocos de neve ao redor da imagem
+snowflake_size = 10
+num_snowflakes = 50
+for _ in range(num_snowflakes):
+    snowflake_x = random.randint(0, width)
+    snowflake_y = random.randint(0, height)
+    draw.rectangle([(snowflake_x, snowflake_y), (snowflake_x + snowflake_size, snowflake_y + snowflake_size)], fill="white")
+
+# Adicionando as palavras "Frozen" e "Disney" em destaque ao redor da imagem
+frozen_font = ImageFont.truetype("arial.ttf", 30)  # Substitua "arial.ttf" pelo caminho correto da fonte
+draw.text((50, 50), "Frozen", font=frozen_font, fill="blue")
+draw.text((width - 150, 50), "Disney", font=frozen_font, fill="blue")
+
+# Salvando a imagem
+image.save("estampa.png")  # Substitua "estampa.png" pelo caminho e nome desejado para a imagem
+
